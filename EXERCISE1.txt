@@ -1,0 +1,103 @@
+
+use day1assig;
+Database changed
+
+1.create table SEMP
+( empno char(4),
+  empname char(20),
+  basic float(9,2),
+  deptno  char(2),
+  depthead char(4)
+);
+
+2.create table SDEPT
+( deptno char(2),
+  deptname char(15)
+);
+
+3.insert into SDEPT values
+('10','Development'),
+('20','Training');
+
+
+4.insert into SEMP(empno,empname,basic,deptno) values
+(0001, SUNIL, 6000, 10),
+(0002, HIREN, 8000, 20);
+
+insert into SEMP values
+(0003, ALI, 4000, 10, 0001);
+
+insert into SEMP(empno,empname,basic,depthead) values
+(0004, GEORGE, 6000, 0002);
+
+
+create table supplier
+     ( `s#` char(2),
+      sname varchar(10),
+      status int(4),
+       city varchar(10)
+    );
+
+desc supplier;
+
+create table parts
+     ( `p#` char(2),
+        pname varchar(10),
+        color varchar(10),
+   	weight int(4),
+	city varchar(10)
+      );
+
+create table projects
+      ( `j#` char(2),
+	 Jname char(10),
+	city varchar(10)
+       );
+
+insert into supplier values
+('s1','AMY',20,'London'),
+('s2','JOHN',10,'Paris'),
+('s3','JACOB',50,'Athens'),
+('s4','RACHEL',30,'London');
+
+insert into parts values
+('p1','wheel','black',12,'London'),
+('p2','break','gray',20,'NY'),
+('p3','handle','green',13,'Boston'),
+('p4','wire','blue',14,'California');
+
+insert into projects values
+('j1','AWS','London'),
+('j2','JAVA','Athens'),
+('j3','DS','NY'),
+('j4','DBMS','Athens');
+
+5.select * from supplier;
+
+6.select `s#`,sname from supplier;
+
+7.select pname,color from parts
+   where city='London';
+
+8.select * from supplier where city='London';
+
+9.select * from supplier where city='Paris' or city='Athens' ;
+
+10.select * from projects where city='Athens';
+
+11.select pname from parts 
+    where weight between 12 and 15;
+
+12.select * from supplier
+   where status>=20;
+
+13.select * from supplier
+   where city!='London';
+
+14.select city from supplier;
+
+15.select weight,weight*0.001 as "w in mg",weight*1000 as "w in kg" from parts;
+
+
+
+
