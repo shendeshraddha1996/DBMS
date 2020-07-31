@@ -1,0 +1,36 @@
+Q1. Write a query that selects all customers whose ratings are equal to or greater than
+    ANY of Serres’.
+
+mysql> select * from customers where rating >= Any
+    -> (select rating from customers where snum =
+    -> (select Snum from salespeople where sname = 'Serres'));
+
+Q2. Write a query using ANY or ALL that will find all salespeople who have no
+    customers located in their city.
+
+mysql> select Snum,Sname,city
+    -> from salespeople
+    -> where (Snum,City) not in
+    -> (select Snum,City from customers);
+
+
+Q3. Write a query that selects all orders for amounts greater than any for the
+    customers in London.
+
+mysql> SELECT *
+    -> FROM orders
+    -> WHERE amt> ANY
+    -> ( SELECT amt
+    -> FROM orders
+    -> WHERE cnum IN
+    -> ( SELECT cnum
+    -> FROM customers
+    -> WHERE city='london' ) );
+
+Q4. Write the above query using MIN or MAX. 
+
+mysql> select *
+    -> from orders
+    -> where amt >ANY(select min(amt) from orders , customers
+    -> where orders.Cnum = customers.Cnum and
+    -> customers.city ='london');

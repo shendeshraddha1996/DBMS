@@ -1,0 +1,36 @@
+Q1. Write a query that lists each order number followed by the name of the customer
+    who made the order.
+
+mysql> select orders.Onum,customers.Cname
+    -> from orders, customers
+    -> where customers.cnum = orders.cnum
+    -> order by orders.onum;
+
+
+
+Q2. Write a query that gives the names of both the salesperson and the customer for
+    each order along with the order number.
+
+mysql> select salespeople.Sname,customers.Cname,orders.Onum
+    ->      from orders,customers,salespeople
+    ->      where salespeople.snum = customers.snum and
+    ->      customers.snum = orders.snum
+    ->      order by 3;
+
+
+Q3. Write a query that produces all customers serviced by salespeople with a
+   commission above 12%. Output the customer’s name, the salesperson’s name,
+   and the salesperson’s rate of commission.
+
+mysql>  select customers.Cname,salespeople.Sname,salespeople.Comm * 100 'Rate of Comm'
+    ->      from salespeople, customers
+    ->      where salespeople.snum = customers.snum
+
+Q4. Write a query that calculates the amount of the salesperson’s commission on each
+   order by a customer with a rating above 100
+
+mysql> select orders.Onum,orders.Amt * salespeople.Comm 'Commision'
+    -> from orders,customers,salespeople
+    -> where salespeople.snum = customers.snum and customers.snum = orders.snum and customers.rating > 100
+    -> group by orders.Onum
+    -> order by 1;

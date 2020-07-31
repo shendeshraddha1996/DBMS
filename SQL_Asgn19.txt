@@ -1,0 +1,42 @@
+Q1. Create a view that shows all of the customers who have the highest ratings.
+
+mysql> create view v_customer
+    -> as
+    -> select * from customers
+    -> where rating = (select max(rating) from customers);
+Query OK, 0 rows affected (0.08 sec)
+mysql> select * from v_customer;
+
+Q2. Create a view that shows the number of salespeople in each city.
+
+mysql> Create view V_spCount
+    -> as
+    -> select count(snum) Snum_count, City
+    -> from salespeople
+    -> group by city;
+
+mysql> select * from v_spcount;
+
+Q3. Create a view that shows the average and total orders for each salesperson after
+   his or her name. Assume all names are unique.
+
+mysql> create view V_avgsal
+    -> as
+    -> select salespeople.Sname, avg(onum) Average,Count(Onum) 'Orders'
+    -> from salespeople, orders
+    -> where salespeople.snum = orders.snum
+    -> group by Sname;
+Query OK, 0 rows affected (0.12 sec)
+
+
+Q4. Create a view that shows each salesperson with multiple customers
+
+mysql> create view v_multicast as
+    -> select salespeople.Sname, count(Customers.Snum)
+    -> from salespeople , customers
+    -> where salespeople.Snum = customers.Snum
+    -> group by  salespeople.Sname
+    -> having count(Customers.Snum) > 1;
+Query OK, 0 rows affected (0.06 sec)
+
+mysql> select * from v_multicast;

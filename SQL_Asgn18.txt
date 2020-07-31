@@ -1,0 +1,60 @@
+Q1. Create a table called Cityorders. This will contain the same onum, amt and snum
+    fields as the Orders table, and the same cnum and city fields as the Customers
+    table, so that each customer’s order will be entered into this table along with his
+    or her city. Onum will be the primary key of Cityorders. All of the fields in
+    Cityorders will be constrained to match the Customers and Orders tables. Assume
+    the parent keys in these tables already have the proper constraints.
+
+mysql> CREATE TABLE cityorders
+    -> SELECT onum,amt,snum,cnum,city
+    -> FROM orders_1
+    -> NATURAL JOIN customers;
+Query OK, 0 rows affected, 1 warning (0.13 sec)
+Records: 0  Duplicates: 0  Warnings: 1
+
+mysql> alter TABLE cityorders add constraint Onum_fk foreign key (Onum) references orders_1(Onum);
+Query OK, 0 rows affected (0.21 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc cityorders;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| onum  | int         | NO   | MUL | NULL    |       |
+| amt   | float(7,2)  | YES  |     | NULL    |       |
+| snum  | int         | YES  |     | NULL    |       |
+| cnum  | int         | YES  |     | NULL    |       |
+| city  | varchar(10) | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+------------------------------------------------------------------------------------------
+
+Q2. Redefine the Orders table as follows:- add a new column called prev, which will
+    identify, for each order, the onum of the previous order for that current customer.
+    Implement this with a foreign key referring to the Orders table itself. The foreign 0
+    key should refer as well to the cnum of the customer, providing a definite 
+    enforced link between the current order and the one referenced.
+
+mysql> CREATE TABLE orders_3
+    -> (
+    -> Onum int(4) primary key,
+    -> Amt float(7,2),
+    -> Odate DATE,
+    -> Cnum int(4),
+    -> Snum int(4),
+    -> prev int(4),
+    -> foreign key(prev) references orders_3(Onum)
+    -> );
+Query OK, 0 rows affected, 5 warnings (0.11 sec)
+
+mysql> desc orders_3;
++-------+------------+------+-----+---------+-------+
+| Field | Type       | Null | Key | Default | Extra |
++-------+------------+------+-----+---------+-------+
+| Onum  | int        | NO   | PRI | NULL    |       |
+| Amt   | float(7,2) | YES  |     | NULL    |       |
+| Odate | date       | YES  |     | NULL    |       |
+| Cnum  | int        | YES  |     | NULL    |       |
+| Snum  | int        | YES  |     | NULL    |       |
+| prev  | int        | YES  | MUL | NULL    |       |
++-------+------------+------+-----+---------+-------+
+-------------------------------------------------------------------------------------------

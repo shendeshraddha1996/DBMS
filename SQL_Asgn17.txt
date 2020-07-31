@@ -1,0 +1,70 @@
+Q1. Create the Orders table so that all onum values as well as all combinations of
+    cnum and snum are different from one another, and so that NULL values are
+    excluded from the date field.
+
+mysql> create table Orders_1
+    -> (
+    -> Onum int(4) PRIMARY KEY,
+    -> Amt float(7,2),
+    -> Odate date NOT NULL,
+    -> Cnum int(40) unique,
+    -> Snum int(4) unique
+    -> );
+
+
+Q2.Create the Salespeople table so that the default commission is 10% with no
+   NULLS permitted, snum is the primary key, and all names fall alphabetically
+   between A and M, inclusive (assume all names will be uppercase).
+
+mysql> Create table salespeople_1
+    -> (
+    -> Snum int(4) PRIMARY KEY,
+    -> Sname varchar(25) check(substr(upper(Sname),1,1) between 'A' and 'M'),
+    -> City varchar(10),
+    -> Comm float(3,2) default 0.10 not null
+    -> );
+Query OK, 0 rows affected, 2 warnings (0.18 sec)
+
+
+
+Q3. Create the Orders table, making sure that the onum is greater than the cnum, and
+    the cnum is greater that the snum. Allow no NULLS in any of these three fields
+
+mysql> Create table orders_2 (
+    -> Onum int(4) not null,
+    -> Amt float(7,2),
+    -> Odate date,
+    -> Cnum int(4) not null,
+    -> Snum int(4) not null,
+    -> CONSTRAINT on_cn_sn check(onum>cnum AND cnum>snum)
+    -> );
+
+mysql> insert into orders_2 values(3,500,'2020-07-27',2,1);
+Query OK, 1 row affected (0.02 sec)
+
+mysql> insert into orders_2 values(3,500,'2020-07-27',4,1);
+ERROR 3819 (HY000): Check constraint 'on_cn_sn' is violated.
+
+mysql> insert into orders_2 values(3,500,'2020-07-27',2,4);
+ERROR 3819 (HY000): Check constraint 'on_cn_sn' is violated.
+------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
