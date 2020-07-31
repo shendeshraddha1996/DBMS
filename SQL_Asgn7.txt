@@ -1,0 +1,55 @@
+Q1. Write a query that counts all orders for October 3.
+
+mysql> select count(odate)
+    -> from orders
+    -> where odate = '1990-10-03';
+
+
+Q2.Write a query that counts the number of different non-NULL city values in the
+   Customers table.
+
+mysql> select count(*) from customers
+    -> where city is not null;
+
+
+Q3.Write a query that selects each customer’s smallest order.
+
+mysql> select cnum,min(amt)
+    -> from orders
+    -> group by cnum;
+
+
+Q4. Write a query that selects the first customer, in alphabetical order, whose name
+ begins with G.
+
+mysql> select * from customers
+    -> where cname like 'G%'
+    -> order by cname;
+
+
+Q5.Write a query that selects the highest rating in each city.
+
+mysql> select city,max(Rating)
+    -> from customers
+    -> group by city;
+
+
+Q6.Write a query that counts the number of salespeople registering orders for each
+   day. (If a salesperson has more than one order on a given day, he or she should be
+   counted only once.)
+
+mysql> select count(odate),odate
+    -> from orders
+    -> group by odate;
+
+
+
+
+
+
+
+
+
+
+
+
