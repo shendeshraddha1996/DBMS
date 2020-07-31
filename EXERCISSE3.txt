@@ -1,0 +1,65 @@
+Q1. Display all the Supplier names with the initial letter capital.
+
+mysql> select concat(upper(substr(sname,1,1)),
+    -> lower(substr(sname,2))) as Name from s;
+
+----------------------------------------------------------------------------------------------
+Q2. Display all the Supplier names in upper case.
+
+mysql> select upper(sname) 'Supplier Name'
+    -> from s;
+
+----------------------------------------------------------------------------------------------
+Q3. Display all the Supplier names in lower case.
+
+mysql> select lower(sname) 'Supplier Name'
+    -> from s;
+
+---------------------------------------------------------------------------------------------
+Q4. Display all the Supplier names padded to 25 characters, with spaces on the left.
+
+mysql> select lpad(sname,25,' ')
+    -> from s;
+
+----------------------------------------------------------------------------------------------
+Q5. Display all the Supplier names (with ‘la’ replaced by ‘ro’).
+ HINT: REPLACE.
+
+mysql> select replace(sname,'la','ro') 'la as ro'
+    -> from s;
+
+----------------------------------------------------------------------------------------------
+Q6. Implement the above command such that ‘l’ is replaced with ‘r’ and ‘a’ is replaced
+with ‘o’.
+
+mysql> select replace(replace(sname,'l','r'),'a','o')
+    -> as Replaced
+    -> from s;
+
+---------------------------------------------------------------------------------------------
+Q7. Display the Supplier names and the lengths of the names.
+
+mysql> select Sname,length(sname) Length
+    -> from s;
+
+----------------------------------------------------------------------------------------------
+Q8. Use the soundex function to search for a supplier by the name of ‘BLOKE’.
+
+mysql> select * from s
+    -> where soundex(sname) = soundex('smeeth');
+
+----------------------------------------------------------------------------------------------
+Q9. Display the Supplier name and the status (as Ten, Twenty, Thirty, etc.).
+
+mysql> select Sname,case
+    -> when status = 10 then 'Ten'
+    -> when status = 20 then 'Twenty'
+    -> when status = 30 then 'Thirty'
+    -> end 'Status'
+    -> from s;
+
+----------------------------------------------------------------------------------------------
+Q10. Display the current day (e.g. Thursday)
+mysql> select dayname(now());
+
+----------------------------------------------------------------------------------------------

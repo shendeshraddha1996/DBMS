@@ -1,0 +1,103 @@
+Q1. Display the Supplier name and the Quantity sold.
+
+mysql> select s.sname,sum(spj.qty) 'Qty Sold'
+    ->     from spj,s
+    ->     where s.`S#` = spj.`s#`
+    ->     group by s.`S#`
+    ->     order by s.`S#`;
+
+---------------------------------------------------------------------------------
+Q2. Display the Part name and Quantity sold.
+
+mysql> select p.pname,sum(spj.qty)'Qty Sold'
+    -> from spj,p
+    -> where p.`p#` = spj.`p#`;
+
+----------------------------------------------------------------------------------
+Q3. Display the Project name and Quantity sold.
+    select j.jname,sum(spj.qty)'Qty Sold'
+
+mysql> select j.jname,sum(spj.qty)'Qty Sold'
+    -> from spj,j
+    -> where j.`j#` = spj.`j#`
+    -> group by j.`j#`;
+
+---------------------------------------------------------------------------------
+Q4. Display the Supplier name, Part name, Project name and Quantity sold.
+
+mysql> select s.Sname,p.Pname,j.Jname,sum(spj.Qty)
+    -> from spj,j,p,s
+    -> where spj.`j#` = j.`j#`
+    -> and spj.`p#` = p.`p#`
+    -> and spj.`s#` = s.`s#`
+    -> group by p.`p#`, j.`j#`,s.`s#`;
+
+-------------------------------------------------------------------------------------
+Q5. Display the Supplier name, Supplying Parts to a Project in the same City.
+
+mysql> select s.Sname,p.Pname
+    -> from spj,j,p,s
+    -> where s.`s#` = spj.`s#` and
+    -> p.`p#` = spj.`p#` and
+    -> j.`j#` = spj.`j#` and
+    -> p.city = j.city;
+
+--------------------------------------------------------------------------------------
+Q6. Display the Part name that is ‘Red’ is color, and the Quantity sold.
+
+mysql> select p.Pname,p.Color , sum(spj.Qty)
+    -> from p , Spj
+    -> where p.Color = 'Red' and   p.`P#` = Spj.`P#`
+    -> group by 1;
+
+-------------------------------------------------------------------------------------
+
+Q7. Display all the Quantity sold by Suppliers with the Status = 20.
+
+mysql> select sum(qty) from spj
+    -> where `s#` in
+    -> (select `s#` from s where status = 20);
+
+mysql> select sum(qty) from spj
+    -> where `s#` = any
+    -> (select `s#` from s where status = 20);
+
+--------------------------------------------------------------------------------------
+
+Q8. Display all the Parts and Quantity with a Weight > 14.
+
+mysql> select p.Pname,sum(spj.Qty)
+    -> from spj,p
+    -> where p.`p#` = spj.`p#`
+    -> and p.weight > 14
+    -> group by p.Pname;
+
+-------------------------------------------------------------------------------------
+
+Q9. Display all the Project names and City, which has bought more than 500 Parts.
+
+mysql> select jname,city
+    -> from spj,j
+    -> where j.`j#` = spj.`j#` and qty > 500;
+
+mysql> select Jname,city from j
+    -> where `j#` in
+    -> (select `j#` from spj where qty > 500);
+
+-------------------------------------------------------------------------------------
+Q10. Display all the Part names and Quantity sold that have a Weight less than 15.
+
+mysql> Select p.Pname,sum(spj.Qty)
+    ->      from spj,p
+    ->      where p.`p#` = spj.`p#`
+    ->      and p.weight < 15
+    ->      group by p.Pname;
+
+------------------------------------------------------------------------------------
+Q11. Display all the Employee names and the name of their Managers.
+
+select a.Ename,b.Bname
+from emp b,emp a
+where a.mgr = b.empno;
+------------------------------------------------------------------------------------
+

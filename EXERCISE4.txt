@@ -1,0 +1,81 @@
+Q1. Display the minimum Status in the Supplier table.
+
+mysql> select min(status) from s;
+
+---------------------------------------------------------------------------------------------
+Q2. Display the maximum Weight in the Parts table.
+
+mysql> select max(weight) from p;
+
+----------------------------------------------------------------------------------------------
+Q3. Display the average Weight of the Parts.
+
+mysql> select avg(weight) from p;
+
+----------------------------------------------------------------------------------------------
+Q4. Display the total Quantity sold for part ‘P1’.
+
+mysql> select sum(Qty) from spj
+    -> where `P#` = 'P1';
+
+----------------------------------------------------------------------------------------------
+5. Display the total Quantity sold for each part.
+
+mysql> select `P#`,sum(Qty) from spj
+    -> group by `P#`
+    -> order by 1;
+
+---------------------------------------------------------------------------------------------
+6. Display the average Quantity sold for each part.
+
+mysql> select `P#`,avg(Qty) from spj
+    -> group by `P#`
+    -> order by 1;
+
+--------------------------------------------------------------------------------------------
+7. Display the maximum Quantity sold for each part, provided the maximum Quantity
+   is greater than 800.
+
+mysql> select `P#`,max(Qty) from spj
+    -> where Qty > 800
+    -> group by `p#`
+    -> order by 1;
+----------------------------------------------------------------------------------------------
+
+8. Display the Status and the count of Suppliers with that Status.
+
+mysql> select status,count(`s#`) from s
+    -> group by status;
+
+----------------------------------------------------------------------------------------------
+9. Display the count of Projects going on in different cities.
+
+mysql> select city,count(`P#`) from P
+    -> group by city;
+
+--------------------------------------------------------------------------------------------
+
+10. What is the difference between COUNT(Status) and COUNT(*) ?
+
+==> Count (status) will count the number of status but didn't consider the row where the entry is null. 
+==> Count (*) will count all the rows including null as well.
+
+---------------------------------------------------------------------------------------------
+11. Display the Status and the Count of Suppliers with that Status in the following format
+as shown below:-
+
+Status Count
+Ten	 1
+Twenty   2
+Thirty   3 
+
+mysql> select case
+    -> when status = 10 then 'Ten'
+    -> when status = 20 then 'Twenty'
+    -> when status = 30 then 'Thirty'
+    -> end Status, count(status) 'Status count'
+    -> from s
+    -> group by status
+    -> order by 2;
+
+---------------------------------------------------------------------------------------------

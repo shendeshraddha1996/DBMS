@@ -1,0 +1,71 @@
+Q1. Display all the Suppliers with the same Status as the supplier, ‘CLARK’.
+
+mysql> select * from s
+    -> where status = (select status from s
+    -> where Sname = 'Bruce');
+
+--------------------------------------------------------------------------------------
+Q2. Display all the Employees in the same department as the employee ‘MILLER’.
+
+select * from emp
+where dname = (select dname from emp where ename = 'MILLER');
+
+--------------------------------------------------------------------------------------
+Q3. Display all the Parts which have more Weight than all the Red parts.
+
+mysql> select * from p where Weight >
+    -> (select max(weight) from p where color = 'Red');
+
+--------------------------------------------------------------------------------------
+Q4. Display all the Projects going on in the same city as the project ‘TAPE’.
+
+mysql> select * from j where city =
+    -> (select city from j where Jname = 'Tape');
+
+--------------------------------------------------------------------------------------
+Q5. Display all the Parts with Weight less than all the Green parts.
+
+mysql> select * from p
+    -> where weight <
+    -> (select min(Weight) from p where color = 'Green');
+
+--------------------------------------------------------------------------------------
+Q6. Display the name of the Supplier who has sold the maximum Quantity (in one
+    sale).
+
+mysql> select s.sname from s
+    -> where `S#` =
+    -> (select `s#` from spj where qty = (select max(qty) from spj));
+
+-------------------------------------------------------------------------------------
+
+Q7. Display the name of the Employee with the minimum Salary.
+
+select ename
+from emp 
+where sal = (select min(sal) from emp);
+-------------------------------------------------------------------------------------- 
+Q8. Display the name of the Supplier who has sold the maximum overall Quantity (sum
+   of Sales).
+
+mysql> select Sname from S
+    -> where `S#` =
+    -> (select `s#` from
+    -> (select `s#`, sum(qty) from spj
+    -> group by `s#`
+    -> order by 2 desc limit 1) as temp);
+
+--------------------------------------------------------------------------------------
+Q9. Display the name of the Department with the maximum number of Employees. 
+
+SELECT * FROM dept
+WHERE deptno IN
+(SELECT deptno FROM emp
+GROUP BY deptno
+HAVING count(*) IN
+(SELECT MAX (mycount)
+FROM
+(SELECT COUNT(*) mycount
+FROM emp
+GROUP BY dept) a));
+--------------------------------------------------------------------------------------
